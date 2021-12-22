@@ -2,19 +2,43 @@
 <html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>setup.jl · PSPipe Planck</title><script data-outdated-warner src="assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.039/juliamono-regular.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="assets/documenter.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="assets/themeswap.js"></script><link href="assets/so.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="index.html">PSPipe Planck</a></span></div><form class="docs-search" action="search.html"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="index.html">Introduction</a></li><li class="is-active"><a class="tocitem" href="setup.html">setup.jl</a><ul class="internal"><li><a class="tocitem" href="#Package-Installation"><span>Package Installation</span></a></li><li><a class="tocitem" href="#Configuration"><span>Configuration</span></a></li><li class="toplevel"><a class="tocitem" href="#Downloading-the-Planck-2018-Data"><span>Downloading the Planck 2018 Data</span></a></li></ul></li><li><a class="tocitem" href="util.html">util.jl</a></li><li><a class="tocitem" href="rawspectra.html">rawspectra.jl</a></li><li><a class="tocitem" href="fitnoisemodel.html">fitnoisemodel.jl</a></li><li><a class="tocitem" href="signalsim.html">signalsim.jl</a></li><li><a class="tocitem" href="corrections.html">corrections.jl</a></li><li><a class="tocitem" href="whitenoise.html">whitenoise.jl</a></li><li><a class="tocitem" href="covmat.html">covmat.jl</a></li><li><a class="tocitem" href="slurmgen.html">slurmgen.jl</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href="setup.html">setup.jl</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href="setup.html">setup.jl</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/simonsobs/PSpipe/blob/master/project/Planck_cov//src/setup.jl" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="setup"><a class="docs-heading-anchor" href="#setup">Setup (setup.jl)</a><a id="setup-1"></a><a class="docs-heading-anchor-permalink" href="#setup" title="Permalink"></a></h1><p>This pipeline is written in Julia, so you will need a <a href="https://julialang.org/">Julia</a> installation in order to run the components. We recommend you use the precompiled binaries provided on the Julia website. Make sure to add the Julia executable to your path, as described in the <a href="https://julialang.org/downloads/platform/">platform-specific instructions.</a></p><h2 id="Package-Installation"><a class="docs-heading-anchor" href="#Package-Installation">Package Installation</a><a id="Package-Installation-1"></a><a class="docs-heading-anchor-permalink" href="#Package-Installation" title="Permalink"></a></h2><p>We use the package manager in the Julia interpeter to install the latest versions of Healpix and PowerSpectra. This will be simpler in the future, when we tag a stable version of these packages for the General Registry. For now, we add the latest versions of these packages from GitHub. Note that package installation requires an internet connection, so unlike the other parts of the pipeline, <code>setup.jl</code> requires an internet connection. If you&#39;re on a cluster, that means you need to run this file on the head node in order to install packages.</p><pre><code class="language-julia hljs">using Pkg
 Pkg.add.([&quot;Healpix&quot;, &quot;PowerSpectra&quot;, &quot;CSV&quot;, &quot;DataFrames&quot;, &quot;TOML&quot;,
   &quot;BlackBoxOptim&quot;, &quot;FileIO&quot;, &quot;JLD2&quot;, &quot;FITSIO&quot;,
-  &quot;DataInterpolations&quot;, &quot;Optim&quot;, &quot;GaussianProcesses&quot;])</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">12-element Vector{Nothing}:
- nothing
- nothing
- nothing
- nothing
- nothing
- nothing
- nothing
- nothing
- nothing
- nothing
- nothing
- nothing</code></pre><p>The command-line interface for this basic pipeline setup script is</p><pre class="shell">
+  &quot;DataInterpolations&quot;, &quot;Optim&quot;, &quot;GaussianProcesses&quot;]);</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">    Updating registry at `~/.julia/registries/General.toml`
+   Resolving package versions...
+  No Changes to `~/.julia/environments/v1.7/Project.toml`
+  No Changes to `~/.julia/environments/v1.7/Manifest.toml`
+   Resolving package versions...
+  No Changes to `~/.julia/environments/v1.7/Project.toml`
+  No Changes to `~/.julia/environments/v1.7/Manifest.toml`
+   Resolving package versions...
+  No Changes to `~/.julia/environments/v1.7/Project.toml`
+  No Changes to `~/.julia/environments/v1.7/Manifest.toml`
+   Resolving package versions...
+  No Changes to `~/.julia/environments/v1.7/Project.toml`
+  No Changes to `~/.julia/environments/v1.7/Manifest.toml`
+   Resolving package versions...
+  No Changes to `~/.julia/environments/v1.7/Project.toml`
+  No Changes to `~/.julia/environments/v1.7/Manifest.toml`
+   Resolving package versions...
+  No Changes to `~/.julia/environments/v1.7/Project.toml`
+  No Changes to `~/.julia/environments/v1.7/Manifest.toml`
+   Resolving package versions...
+  No Changes to `~/.julia/environments/v1.7/Project.toml`
+  No Changes to `~/.julia/environments/v1.7/Manifest.toml`
+   Resolving package versions...
+  No Changes to `~/.julia/environments/v1.7/Project.toml`
+  No Changes to `~/.julia/environments/v1.7/Manifest.toml`
+   Resolving package versions...
+  No Changes to `~/.julia/environments/v1.7/Project.toml`
+  No Changes to `~/.julia/environments/v1.7/Manifest.toml`
+   Resolving package versions...
+  No Changes to `~/.julia/environments/v1.7/Project.toml`
+  No Changes to `~/.julia/environments/v1.7/Manifest.toml`
+   Resolving package versions...
+  No Changes to `~/.julia/environments/v1.7/Project.toml`
+  No Changes to `~/.julia/environments/v1.7/Manifest.toml`
+   Resolving package versions...
+  No Changes to `~/.julia/environments/v1.7/Project.toml`
+  No Changes to `~/.julia/environments/v1.7/Manifest.toml`</code></pre><p>The command-line interface for this basic pipeline setup script is</p><pre class="shell">
 <code class="language-shell hljs">$ julia setup.jl global.toml</code></pre><ul><li>It displays the contents of the global TOML configuration file named <em>global.toml</em>.</li><li>This script downloads the Planck data to the specified directories in <em>global.toml</em>.</li></ul><h2 id="Configuration"><a class="docs-heading-anchor" href="#Configuration">Configuration</a><a id="Configuration-1"></a><a class="docs-heading-anchor-permalink" href="#Configuration" title="Permalink"></a></h2><p>All of the pipeline scripts take a configuration TOML file as the first argument. We now print out just the <code>[dir]</code> entry in the TOML, which is what you will need to configure.</p><pre><code class="language-julia hljs">using TOML
 configfile = ARGS[1]  # read in the first command line argument
 println(&quot;config filename: &quot;, configfile, &quot;\n&quot;)
@@ -143,7 +167,7 @@ plicref/foreground_cl.txt
 plicref/leakage.ermform.dat
 plicref/subpix.ermform.dat
 plicref/theory_cl.txt
-plicref/vec_all_spectra.dat</code></pre><p>sims</p><pre><code class="language-julia hljs">using Healpix
+plicref/vec_all_spectra.dat</code></pre><p>For the sims, we will use the full pixel weights to efficiently compute the spherical harmonic transforms. The pixel weights are lazily downloaded in the Healpix package. We trigger that downloading here. Similarly we trigger some downloading of example data from PowerSpectra.jl for the purpose of plotting.</p><pre><code class="language-julia hljs">using Healpix
 Healpix.applyFullWeights!(HealpixMap{Float64, RingOrder}(2048))
 using PowerSpectra
-PowerSpectra.planck256_beamdir()</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;/home/zack/.julia/artifacts/4e546e76ad331ddacfd39a18d8e3e33d065a0179&quot;</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="index.html">« Introduction</a><a class="docs-footer-nextpage" href="util.html">util.jl »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.10 on <span class="colophon-date" title="Tuesday 21 December 2021 19:21">Tuesday 21 December 2021</span>. Using Julia version 1.7.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+PowerSpectra.planck256_beamdir()</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;/home/zack/.julia/artifacts/4e546e76ad331ddacfd39a18d8e3e33d065a0179&quot;</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="index.html">« Introduction</a><a class="docs-footer-nextpage" href="util.html">util.jl »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.10 on <span class="colophon-date" title="Tuesday 21 December 2021 21:05">Tuesday 21 December 2021</span>. Using Julia version 1.7.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
